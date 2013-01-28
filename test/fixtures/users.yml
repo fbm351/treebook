@@ -3,3 +3,9 @@ fred:
     last_name: "Myers"
     email: "fred@fred-myers.com"
     profile_name: "fredmyers"
+
+bob:
+    first_name: "Bob"
+    last_name: "Builder"
+    email: "bob@builer.com"
+    profile_name: "bobthebuilder"
