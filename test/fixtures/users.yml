@@ -3,6 +3,7 @@ fred:
     last_name: "Myers"
     email: "fred@fred-myers.com"
     profile_name: "fredmyers"
+    encrypted_password: "$2a$10$Fh/Hm8RxDsuPTeBUr6864.GARlcmt7zF2WspaXGr3BIv2C27N.osq"
 
 bob:
     first_name: "Bob"
