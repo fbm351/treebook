@@ -58,8 +58,8 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "that creating friendships on a user works" do
-    users(:fred).friends << users(:mike)
-    users(:fred).friends.reload
+    users(:fred).pending_friends << users(:mike)
+    users(:fred).pending_friends.reload
     assert users(:fred).pending_friends.include?(users(:mike))
   end
 
