@@ -17,7 +17,7 @@ FactoryGirl.define do
             state 'pending'
         end
 
-        factory :requsted_user_friendship do
+        factory :requested_user_friendship do
             state 'requested'
         end
 
