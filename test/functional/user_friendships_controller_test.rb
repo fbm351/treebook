@@ -185,7 +185,9 @@ class UserFriendshipsControllerTest < ActionController::TestCase
 
         context "when logged in" do
             setup do
-                @user_friendship = create(:pending_user_friendship, user: users(:fred))
+                @friend = create(:user)
+                @user_friendship = create(:pending_user_friendship, user: users(:fred), friend: @friend)
+                create(:pending_user_friendship, friend: users(:fred), user: @friend)
                 sign_in users(:fred)
                 put :accept, id: @user_friendship
                 @user_friendship.reload
@@ -201,7 +203,7 @@ class UserFriendshipsControllerTest < ActionController::TestCase
             end
 
             should "have a flash success message" do
-                assert_equal "You are not friends with #{@user_friendship.friend.first_name}", flash[:success]
+                assert_equal "You are now friends with #{@user_friendship.friend.first_name}", flash[:success]
             end
         end
     end
@@ -235,6 +237,35 @@ class UserFriendshipsControllerTest < ActionController::TestCase
             end
 
 
+        end
+    end
+
+    context "#destroy" do
+        context "When not logged in" do
+            should "Redirect to login page" do
+                put :destroy, id: 1
+                assert_response :redirect
+                assert_redirected_to login_path
+            end
+        end
+
+        context "when logged in" do
+            setup do
+                @user_friendship = create(:accepted_user_friendship, friend: @friend, user: users(:fred))
+                create(:accepted_user_friendship, friend: users(:fred), user: @friend)
+                sign_in users(:fred)
+            end
+
+            should "delete user friendships" do
+                assert_difference 'UserFriendship.count', -2 do
+                    delete :destroy, id: @user_friendship
+                end
+            end
+
+            should "set the flash" do
+                delete :destroy, id: @user_friendship
+                assert_equal "Friendship destroyed", flash[:success]
+            end
         end
     end
 end
